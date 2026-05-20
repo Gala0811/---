@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Тревожный рюкзак - памятка</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #e0e0e0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        /* СТИЛИ ДЛЯ ЭКРАНА */
+        .page {
+            max-width: 1000px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            padding: 40px;
+            margin: 0 auto;
+        }
+        
+        /* КНОПКА ПЕЧАТИ */
+        .print-btn {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-bottom: 30px;
+            display: inline-block;
+            transition: background 0.3s;
+        }
+        .print-btn:hover {
+            background: #45a049;
+        }
+        
+        /* ЗАГОЛОВКИ */
+        h1 {
+            color: #2c3e50;
+            font-size: 32px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .subhead {
+            color: #666;
+            border-bottom: 2px solid #ff9800;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        
+        h2 {
+            color: #ff9800;
+            font-size: 22px;
+            margin: 25px 0 15px 0;
+            padding-left: 10px;
+            border-left: 4px solid #ff9800;
+        }
+        
+        /* СЕТКА СПИСКА (2 колонки на больших экранах) */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        /* ОТДЕЛЬНАЯ КАТЕГОРИЯ */
+        .category {
+            break-inside: avoid;
+            page-break-inside: avoid;
+            margin-bottom: 20px;
+        }
+        
+        .category h3 {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 12px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        /* ПУНКТЫ СПИСКА С КВАДРАТИКАМИ */
+        .checklist {
+            list-style: none;
+            padding-left: 0;
+        }
+        .checklist li {
+            padding: 6px 0 6px 30px;
+            position: relative;
+            font-size: 15px;
+            line-height: 1.4;
+        }
+        .checklist li:before {
+            content: "☐";
+            position: absolute;
+            left: 0;
+            font-size: 18px;
+            color: #ff9800;
+        }
+        
+        /* БЛОК ПРОВЕРКИ */
+        .check-block {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 30px 0 20px;
+        }
+        .check-block h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        .check-block .checklist li:before {
+            color: #dc3545;
+        }
+        
+        /* ПОДВАЛ */
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+        }
+        
+        /* СТИЛИ ДЛЯ ПЕЧАТИ */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+            }
+            .page {
+                max-width: 100%;
+                padding: 20px;
+                box-shadow: none;
+                border-radius: 0;
+            }
+            .print-btn {
+                display: none;
+            }
+            .checklist li:before {
+                font-size: 16px;
+            }
+            .category {
+                break-inside: avoid;
+            }
+        }
+        
+        /* ДЛЯ ТЕЛЕФОНА */
+        @media (max-width: 700px) {
+            .page {
+                padding: 20px;
+            }
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <button class="print-btn" onclick="window.print()">🖨️ Распечатать / Сохранить как PDF</button>
+    
+    <h1>
+        <span>🎒</span> Тревожный рюкзак
+    </h1>
+    <div class="subhead">
+        Чек-лист для сборки • Распечатай, отметь галочками и положи рядом с рюкзаком
+    </div>
+    
+    <!-- ДВЕ КОЛОНКИ ДЛЯ ОСНОВНОГО СПИСКА -->
+    <div class="grid-2">
+        
+        <!-- ЛЕВАЯ КОЛОНКА -->
+        <div>
+            <div class="category">
+                <h3>💧 ВОДА И ЕДА</h3>
+                <ul class="checklist">
+                    <li>Вода питьевая (1,5–3 л)</li>
+                    <li>Таблетки для обеззараживания воды</li>
+                    <li>Энергетические батончики (3–5 шт)</li>
+                    <li>Галеты / сухари / орехи</li>
+                    <li>Консервы (с ключом, 1–2 шт)</li>
+                    <li>Соль, сахар (по 1 пакетику)</li>
+                </ul>
+            </div>
+            
+            <div class="category">
+                <h3>🏥 АПТЕЧКА ПЕРВОЙ ПОМОЩИ</h3>
+                <ul class="checklist">
+                    <li>Аптечка (бинт, пластырь, жгут, салфетки)</li>
+                    <li>Личные лекарства (на 3–5 дней)</li>
+                    <li>Обезболивающее (парацетамол / ибупрофен)</li>
+                    <li>Антисептик (спиртовые салфетки или гель)</li>
+                    <li>Эластичный бинт (2 шт)</li>
+                    <li>Нитриловые перчатки (2–3 пары)</li>
+                    <li>Пинцет, ножницы маленькие</li>
+                </ul>
+            </div>
+            
+            <div class="category">
+                <h3>📰 ДОКУМЕНТЫ И ДЕНЬГИ</h3>
+                <ul class="checklist">
+                    <li>Паспорт, свидетельства о рождении (в гермопакете)</li>
+                    <li>Медицинский полис, СНИЛС</li>
+                    <li>Наличные деньги (мелкие купюры)</li>
+                    <li>Копии документов (на случай утери)</li>
+                </ul>
+            </div>
+            
+            <div class="category">
+                <h3>📱 СВЯЗЬ И ИНФОРМАЦИЯ</h3>
+                <ul class="checklist">
+                    <li>Пауэрбанк + кабели для телефона</li>
+                    <li>Маленькое радио на батарейках</li>
+                    <li>Блокнот и ручка/карандаш</li>
+                    <li>Список контактов близких (бумажный)</li>
+                    <li>Свисток (сигнал спасателям)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- ПРАВАЯ КОЛОНКА -->
+        <div>
+            <div class="category">
+                <h3>🔦 ИНСТРУМЕНТЫ</h3>
+                <ul class="checklist">
+                    <li>Фонарик с динамо-зарядкой</li>
+                    <li>Мультитул / складной нож</li>
+                    <li>Спички в гермоупаковке / зажигалка</li>
+                    <li>Спасательное одеяло (160х210 см)</li>
+                    <li>Респиратор / маска</li>
+                    <li>Ремонтный набор (изолента, скотч, нитки)</li>
+                </ul>
+            </div>
+            
+            <div class="category">
+                <h3>🧥 ОДЕЖДА И СНАРЯЖЕНИЕ</h3>
+                <ul class="checklist">
+                    <li>Сменное бельё + тёплые носки (2 пары)</li>
+                    <li>Тёплая кофта / флиска</li>
+                    <li>Дождевик непромокаемый</li>
+                    <li>Кепка / панама</li>
+                    <li>Непромокаемый мешок для вещей</li>
+                </ul>
+            </div>
+            
+            <div class="category">
+                <h3>🧴 ГИГИЕНА</h3>
+                <ul class="checklist">
+                    <li>Зубная щётка + паста мини</li>
+                    <li>Влажные салфетки (20–30 шт)</li>
+                    <li>Антибактериальный гель (санитайзер)</li>
+                    <li>Туалетная бумага (маленький рулон)</li>
+                    <li>Гигиенические принадлежности (по необходимости)</li>
+                </ul>
+            </div>
+            
+            <div class="category">
+                <h3>🍼 ДЛЯ ДЕТЕЙ (если есть)</h3>
+                <ul class="checklist">
+                    <li>Подгузники, влажные салфетки</li>
+                    <li>Детское питание / смесь</li>
+                    <li>Небольшая игрушка (для успокоения)</li>
+                    <li>Сменная одежда на размер больше</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- БЛОК ПРОВЕРКИ (ОБЩИЙ) -->
+    <div class="check-block">
+        <h3>🔄 ПРОВЕРЬ КАЖДЫЕ 6 МЕСЯЦЕВ</h3>
+        <ul class="checklist">
+            <li>Срок годности еды и воды</li>
+            <li>Батарейки (если есть в фонарике / радио)</li>
+            <li>Аккумулятор пауэрбанка (подзарядить)</li>
+            <li>Размер одежды и обуви (особенно у детей)</li>
+            <li>Срок годности лекарств</li>
+            <li>Целостность упаковок и гермопакетов</li>
+        </ul>
+    </div>
+    
+    <!-- КОРОТКИЕ СОВЕТЫ -->
+    <div style="background: #f9f9f9; padding: 15px; border-radius: 12px; margin-top: 20px;">
+        <p style="font-size: 14px; color: #555;">💡 <strong>Совет:</strong> Храни рюкзак у двери или в машине. Он должен быть лёгким (не больше 10-15 кг). После сборки примерь — сможешь ли пробежать 500 метров? Если нет — убери лишнее.</p>
+    </div>
+    
+    <div class="footer">
+        © Российский Красный Крест • Инструктор по персональной готовности к ЧС • Разработано с ❤️
+    </div>
+</div>
+
+<script>
+    // Можно добавить автоматическое обновление даты проверки, но пока просто оставим
+</script>
+</body>
+</html>
