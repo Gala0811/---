@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Шпаргалка: как разобрать любую ситуацию за 10 минут</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #e0e0e0;
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .page {
+            max-width: 1100px;
+            background: white;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            border-radius: 16px;
+            padding: 50px;
+            margin: 0 auto;
+        }
+        .print-btn {
+            background: #2c3e50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-bottom: 30px;
+            display: inline-block;
+        }
+        .print-btn:hover {
+            background: #1a252f;
+        }
+        h1 {
+            color: #1a252f;
+            font-size: 32px;
+            margin-bottom: 10px;
+            border-left: 5px solid #e67e22;
+            padding-left: 20px;
+        }
+        .subhead {
+            color: #666;
+            font-size: 18px;
+            margin-bottom: 40px;
+            padding-left: 25px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 15px;
+        }
+        h2 {
+            color: #e67e22;
+            font-size: 24px;
+            margin: 35px 0 15px 0;
+            padding-left: 10px;
+            border-left: 4px solid #e67e22;
+        }
+        h3 {
+            color: #2c3e50;
+            margin: 15px 0 10px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background: #f5f5f5;
+        }
+        .highlight {
+            background: #fef9e6;
+        }
+        ul, ol {
+            margin: 15px 0 15px 30px;
+        }
+        li {
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+        .tip {
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .template {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 12px;
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            text-align: center;
+            font-size: 12px;
+            color: #555;
+        }
+        .pyramid {
+            background: #f9f9f9;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .pyramid-level {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .level {
+            padding: 12px;
+            margin: 2px 0;
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+        .level:hover {
+            transform: scale(1.02);
+        }
+        .level strong {
+            font-size: 16px;
+        }
+        .level span {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        .level-6 { background: #e74c3c; color: white; }
+        .level-5 { background: #e67e22; color: white; }
+        .level-4 { background: #f1c40f; color: #2c3e50; }
+        .level-3 { background: #2ecc71; color: white; }
+        .level-2 { background: #3498db; color: white; }
+        .level-1 { background: #9b59b6; color: white; }
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+            }
+            .page {
+                max-width: 100%;
+                padding: 20px;
+                box-shadow: none;
+                border-radius: 0;
+            }
+            .print-btn {
+                display: none;
+            }
+            .level:hover {
+                transform: none;
+            }
+        }
+        @media (max-width: 700px) {
+            .page {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            h2 {
+                font-size: 20px;
+            }
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <button class="print-btn" onclick="window.print()">🖨️ Сохранить как PDF / Распечатать</button>
+    
+    <h1>📘 Шпаргалка: как разобрать любую ситуацию за 10 минут</h1>
+    <div class="subhead">Три инструмента в одной таблице</div>
+    
+    <table>
+        <tr><th>Инструмент</th><th>Суть</th></tr>
+        <tr><td><strong>Пирамида Дилтса</strong></td><td>6 уровней: где искать корень проблемы</td></tr>
+        <tr><td><strong>Формула «Быть → Делать → Иметь»</strong></td><td>Правильный порядок действий</td></tr>
+        <tr><td><strong>Три вопроса Сократа</strong></td><td>Как проверить любое убеждение на прочность</td></tr>
+    </table>
+    
+    <h2>🧠 Часть 1. Пирамида Дилтса (6 уровней)</h2>
+    <p>Уровни идут <strong>снизу вверх</strong>. Чем выше уровень — тем сильнее он влияет на всё, что ниже.</p>
+    
+    <!-- ВИЗУАЛЬНАЯ ПИРАМИДА -->
+    <div class="pyramid">
+        <h3>📊 Визуальная схема пирамиды</h3>
+        <div class="pyramid-level">
+            <div class="level level-6"><strong>6. Миссия</strong><br><span>Зачем? Ради чего?</span></div>
+            <div class="level level-5"><strong>5. Идентичность</strong><br><span>Кто я? Какую роль играю?</span></div>
+            <div class="level level-4"><strong>4. Убеждения</strong><br><span>Во что верю? Мои правила</span></div>
+            <div class="level level-3"><strong>3. Способности</strong><br><span>Что умею? Какой навык нужен?</span></div>
+            <div class="level level-2"><strong>2. Поведение</strong><br><span>Что делаю? Что не делаю?</span></div>
+            <div class="level level-1"><strong>1. Окружение</strong><br><span>Где? Кто рядом? Когда?</span></div>
+        </div>
+        <p style="font-size: 13px; color: #666; margin-top: 15px;">⬆️ Уровни идут снизу вверх. Чем выше — тем важнее ⬆️</p>
+    </div>
+    
+    <table>
+        <tr><th>Уровень</th><th>Вопрос к себе</th></tr>
+        <tr><td><strong>1. Окружение</strong></td><td>Где я? Кто рядом? Когда это происходит?</td></tr>
+        <tr><td><strong>2. Поведение</strong></td><td>Что я конкретно делаю? Что не делаю?</td></tr>
+        <tr><td><strong>3. Способности</strong></td><td>Что я умею? Чего не умею? Какой навык нужен?</td></tr>
+        <tr><td><strong>4. Убеждения</strong></td><td>Во что я верю в этой ситуации? Какие у меня правила?</td></tr>
+        <tr><td><strong>5. Идентичность</strong></td><td>Кто я здесь? Какую роль играю?</td></tr>
+        <tr><td><strong>6. Миссия</strong></td><td>Зачем мне это? Ради чего?</td></tr>
+    </table>
+    
+    <div class="tip"><strong>💡 Главное правило:</strong> не пытайся чинить низкий уровень, если проблема лежит высоко.</div>
+    
+    <h2>🔗 Часть 2. Связь с формулой «Быть → Делать → Иметь»</h2>
+    <table>
+        <tr><th>Формула</th><th>Уровень Дилтса</th><th>Что это значит</th></tr>
+        <tr><td><strong>Иметь</strong></td><td>Окружение</td><td>Деньги, люди, вещи, результат</td></tr>
+        <tr><td><strong>Делать</strong></td><td>Поведение + Способности</td><td>Действия, привычки, навыки</td></tr>
+        <tr class="highlight"><td><strong>Быть</strong></td><td>Идентичность + Миссия</td><td>Роль, самоощущение, предназначение</td></tr>
+    </table>
+    
+    <p><strong>Правильный порядок:</strong> <code>БЫТЬ → ДЕЛАТЬ → ИМЕТЬ</code></p>
+    
+    <div class="tip"><strong>⚠️ Самая частая ошибка:</strong> пытаться начать с «иметь» («вот разбогатею — тогда и заживу»).<br>Окружение (иметь) — самый нижний уровень. Он не может управлять идентичностью (быть).</div>
+    
+    <h2>✅ Часть 3. Три вопроса Сократа (для проверки убеждений)</h2>
+    <table>
+        <tr><th>Вопрос</th><th>Что проверяем</th></tr>
+        <tr><td><strong>1. Это правда?</strong></td><td>Соответствует фактам? Можно доказать?</td></tr>
+        <tr><td><strong>2. Это доброе?</strong></td><td>Не вредит ли мне или другим? Делает ли лучше?</td></tr>
+        <tr><td><strong>3. Это полезное?</strong></td><td>Помогает достичь цели? Или оправдывает бездействие?</td></tr>
+    </table>
+    
+    <p><strong>Если хотя бы один ответ «НЕТ»</strong> — от этого убеждения можно отказываться или менять его на рабочее.</p>
+    
+    <h2>📋 Часть 4. Алгоритм разбора любой ситуации (пошагово)</h2>
+    <ol>
+        <li><strong>Пройди по уровням Дилтса (снизу вверх)</strong> — задай себе 6 вопросов. Запиши, что получается на каждом уровне.</li>
+        <li><strong>Найди «затык»</strong> — где ответ звучит фальшиво, больно или тупиково? Чаще всего уровни 4 (Убеждения) или 5 (Идентичность).</li>
+        <li><strong>Примени формулу «Быть → Делать → Иметь»</strong> — какую роль я сейчас играю? Какие действия из неё следуют? Какой результат получаю?</li>
+        <li><strong>Проверь ключевое убеждение через Сократа</strong> — задай три вопроса. Если не выдерживает — замени на рабочее.</li>
+        <li><strong>Спустись вниз к поведению</strong> — когда верхние уровни настроены, действия становятся лёгкими.</li>
+    </ol>
+    
+    <h2>🔥 Часть 5. Таблица-подсказка (с чего начинать)</h2>
+    <table>
+        <tr><th>Если проблема звучит так</th><th>Первым проверяй уровень</th></tr>
+        <tr><td>«Вокруг одни идиоты»</td><td>Окружение или Убеждения</td></tr>
+        <tr><td>«Знаю, что надо, но не делаю»</td><td>Идентичность</td></tr>
+        <tr><td>«Встаю с кровати только под пинком»</td><td>Миссия</td></tr>
+        <tr><td>«Начал — бросил»</td><td>Убеждения</td></tr>
+        <tr><td>«Боюсь просить / говорить о деньгах»</td><td>Идентичность</td></tr>
+        <tr><td>«Всё делаю, а результата нет»</td><td>Идентичность</td></tr>
+        <tr><td>«Завидую и злюсь»</td><td>Убеждения</td></tr>
+        <tr><td>«Не могу простить обиду»</td><td>Убеждения + Идентичность</td></tr>
+        <tr><td>«Вечно нет времени»</td><td>Миссия</td></tr>
+        <tr><td>«Стыдно просить помощь»</td><td>Идентичность</td></tr>
+    </table>
+    
+    <h2>✨ Часть 6. Пустой шаблон для себя (распечатай и заполняй)</h2>
+    <div class="template">
+        <h4>📝 Моя ситуация: _________________________</h4>
+        <table>
+            <tr><th>Уровень</th><th>Мой ответ</th></tr>
+            <tr><td>Окружение</td><td>_________________</td></tr>
+            <tr><td>Поведение</td><td>_________________</td></tr>
+            <tr><td>Способности</td><td>_________________</td></tr>
+            <tr><td>Убеждения</td><td>_________________</td></tr>
+            <tr><td>Идентичность</td><td>_________________</td></tr>
+            <tr><td>Миссия</td><td>_________________</td></tr>
+        </table>
+        
+        <p><strong>Где затык?</strong> Уровень № _____</p>
+        <p><strong>Моя роль сейчас (быть):</strong> _________________</p>
+        <p><strong>Какая роль нужна:</strong> _________________</p>
+        <p><strong>Убеждение, которое мешает:</strong> _______________</p>
+        
+        <p><strong>Проверка Сократом:</strong><br>
+        - Правда? _____<br>
+        - Добро? _____<br>
+        - Полезно? _____</p>
+        
+        <p><strong>Новое рабочее убеждение:</strong> _______________</p>
+        <p><strong>Что буду делать иначе (поведение):</strong> ______</p>
+    </div>
+    
+    <h2>🎁 Как скачать эту шпаргалку</h2>
+    <ul>
+        <li>Нажми кнопку <strong>«Сохранить как PDF / Распечатать»</strong> (вверху страницы)</li>
+        <li>Выбери <strong>«Сохранить как PDF»</strong> вместо принтера</li>
+        <li>Готово! Файл сохранится на твой компьютер или телефон</li>
+    </ul>
+    
+    <div class="tip">
+        📌 Ты можешь использовать эту шпаргалку для себя, своих подписчиков, клиентов или друзей.<br>
+        Главное — не выдавай за своё авторство всех трёх моделей (Дилтс, Сократ и формула «Быть → Делать → Иметь» — не твои и не мои, а инструменты, которые мы собираем в удобную схему).
+    </div>
+    
+    <div class="footer">
+        © «Игра отражений», 2026<br>
+        Вы можете использовать её для себя, делиться с друзьями и подписчиками.<br>
+        Запрещено изменять текст и выдавать его за свой.
+    </div>
+</div>
+<script>console.log('Шпаргалка готова');</script>
+</body>
+</html>
