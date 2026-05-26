@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>🧠 Игра «Формула Сократа» — Быть • Делать • Иметь</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { box-sizing: border-box; user-select: none; }
+        body {
+            background: #e9eef3;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            padding: 30px 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .game-container {
+            max-width: 1100px;
+            width: 100%;
+            background: white;
+            border-radius: 48px;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.1);
+            padding: 25px;
+        }
+        h1 {
+            font-size: 28px;
+            margin: 0 0 5px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .sub {
+            color: #4a5568;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .legend {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        .legend span {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        .cell {
+            aspect-ratio: 1 / 1;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 22px;
+            transition: 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            cursor: pointer;
+        }
+        .cell.locked {
+            background: #cbd5e1;
+            color: #94a3b8;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        .cell.unlocked {
+            background: #fef9c3;
+            color: #1e293b;
+            cursor: pointer;
+        }
+        .cell.done {
+            background: #bbf7d0;
+            text-decoration: line-through;
+            cursor: default;
+        }
+        .zone-be { background: #dcfce7; border-left: 5px solid #22c55e; }
+        .zone-do { background: #ffedd5; border-left: 5px solid #f97316; }
+        .zone-have { background: #dbeafe; border-left: 5px solid #3b82f6; }
+
+        .question-panel {
+            background: #f8fafc;
+            border-radius: 28px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.05);
+        }
+        .question-text {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 16px;
+            background: white;
+            padding: 18px;
+            border-radius: 24px;
+            border-left: 6px solid #f59e0b;
+        }
+        textarea {
+            width: 100%;
+            padding: 16px;
+            font-size: 1rem;
+            font-family: inherit;
+            border: 1px solid #cbd5e1;
+            border-radius: 24px;
+            resize: vertical;
+            margin-bottom: 12px;
+        }
+        button {
+            background: #0f172a;
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-right: 12px;
+            margin-bottom: 8px;
+        }
+        button.secondary { background: #334155; }
+        button.warning { background: #b91c1c; }
+        button.success { background: #15803d; }
+        .action-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .footer {
+            font-size: 12px;
+            text-align: center;
+            color: #5b6e8c;
+            margin-top: 30px;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 20px;
+        }
+        .final-message {
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 24px;
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        @media (max-width: 700px) {
+            .grid { gap: 6px; }
+            .cell { font-size: 16px; }
+            .question-text { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="game-container">
+    <h1>🧠 Формула Сократа <span style="font-size:14px; background:#eef2ff; padding:5px 12px; border-radius:50px;">БЫТЬ → ДЕЛАТЬ → ИМЕТЬ</span></h1>
+    <div class="sub">Поле 6×6 • 36 вопросов • отвечай последовательно • ответы сохраняются автоматически</div>
+    <div class="legend">
+        <div><span style="background:#22c55e;"></span> Быть (качества, ценности)</div>
+        <div><span style="background:#f97316;"></span> Делать (действия, привычки)</div>
+        <div><span style="background:#3b82f6;"></span> Иметь (результаты, жизнь)</div>
+    </div>
+    <div id="grid" class="grid"></div>
+    <div class="question-panel" id="questionPanel">
+        <div class="question-text" id="questionText">❓ Нажми на первую клетку (1), чтобы начать</div>
+        <textarea id="answerInput" rows="3" placeholder="Запиши здесь свой ответ, размышление или инсайт..."></textarea>
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+            <button id="saveAndNextBtn">💾 Сохранить ответ и открыть следующую клетку</button>
+            <div><span id="saveStatus" style="font-size: 13px; color:#2b6e3b;"></span></div>
+        </div>
+    </div>
+    <div class="action-bar">
+        <button id="downloadBtn" class="secondary">📥 Скачать все ответы</button>
+        <button id="printBtn" class="secondary">🖨️ Распечатать</button>
+        <button id="resetGameBtn" class="warning">🔄 Новая игра (удалить ответы)</button>
+    </div>
+    <div class="footer">
+        💡 Клетки открываются по порядку. После ответа на текущий вопрос откроется следующая.<br>
+        ✔️ Автосохранение в браузере — можно закрыть и продолжить позже.<br><br>
+        © «Игра отражений», 2026<br>
+        Вы можете использовать её для себя, делиться с друзьями и подписчиками.<br>
+        Запрещено изменять текст и выдавать его за свой.
+    </div>
+</div>
+
+<script>
+    const ВОПРОСЫ = [
+        "1. Кто я сейчас? Кем я хочу быть?",
+        "2. Что я думаю о своей ситуации? Как эти мысли влияют на мои действия?",
+        "3. Что во мне мешает мне двигаться вперёд?",
+        "4. Какими качествами должен обладать я, чтобы достичь своей цели?",
+        "5. Каковы мои сильные стороны? как ещё я могу их усилить?",
+        "6. Какие черты характера мне стоит развить?",
+        "7. Какой образ будущего себя я хочу создать?",
+        "8. В чём я готов идти на компромисс, а в чём — нет?",
+        "9. Соответствуют ли мои цели моим ценностям?",
+        "10. Я принимаю решения, опираясь на...",
+        "11. Мои ежедневные действия и привычки, которые (не) приведут меня к результату:",
+        "12. Как я могу подготовиться и обезопасить себя в сложных ситуациях?",
+        "13. Каков мой текущий план действий? Как я могу его улучшить?",
+        "14. Какие три ключевых шага приблизят меня к моей цели?",
+        "15. Что я могу сделать уже сегодня?",
+        "16. Чего мне не хватает для достижения цели?",
+        "17. Какой навык мне нужно развить в первую очередь?",
+        "18. На что я могу опереться, чтобы приблизиться к цели?",
+        "19. Где мне нужно улучшить коммуникацию?",
+        "20. Как я встраиваю отношения с важными людьми?",
+        "21. Кто может помочь мне достичь цели?",
+        "22. Как я могу работать эффективнее?",
+        "23. Где я теряю энергию впустую?",
+        "24. Как я распоряжаюсь своим временем?",
+        "25. Чего я хочу достичь?",
+        "26. Что конкретно я хочу иметь?",
+        "27. Что я хочу чувствовать, когда получу желаемое?",
+        "28. Как я пойму, что достиг своей цели?",
+        "29. Какие эмоции я испытываю, когда двигаюсь к цели?",
+        "30. Какое внутреннее состояние поможет мне действовать эффективнее?",
+        "31. Как я хочу жить?",
+        "32. Какие условия мне нужны для комфорта и развития?",
+        "33. Что изменится в моей жизни, когда я получу желаемое?",
+        "34. Как это изменит мою жизнь и жизнь других людей?",
+        "35. Чем я хочу делиться с миром?",
+        "36. Какой след я хочу оставить?"
+    ];
+
+    let answers = new Array(36).fill("");
+    let unlockedUntil = 1;
+
+    const gridDiv = document.getElementById("grid");
+    const questionText = document.getElementById("questionText");
+    const answerInput = document.getElementById("answerInput");
+    const saveAndNextBtn = document.getElementById("saveAndNextBtn");
+    const downloadBtn = document.getElementById("downloadBtn");
+    const resetGameBtn = document.getElementById("resetGameBtn");
+    const printBtn = document.getElementById("printBtn");
+    const saveStatusSpan = document.getElementById("saveStatus");
+    const questionPanel = document.getElementById("questionPanel");
+
+    function saveGame() { 
+        localStorage.setItem("socrat_game", JSON.stringify({ answers, unlockedUntil })); 
+    }
+
+    function loadGame() {
+        const saved = localStorage.getItem("socrat_game");
+        if (saved) {
+            try {
+                const state = JSON.parse(saved);
+                answers = state.answers || new Array(36).fill("");
+                unlockedUntil = state.unlockedUntil ?? 1;
+            } catch(e) {}
+        }
+        if (unlockedUntil < 1) unlockedUntil = 1;
+        if (unlockedUntil > 36) unlockedUntil = 36;
+    }
+
+    function renderGrid() {
+        gridDiv.innerHTML = "";
+        for (let i = 0; i < 36; i++) {
+            const cell = document.createElement("div");
+            cell.classList.add("cell");
+            const zone = i < 12 ? "be" : (i < 24 ? "do" : "have");
+            if (zone === 'be') cell.classList.add("zone-be");
+            if (zone === 'do') cell.classList.add("zone-do");
+            if (zone === 'have') cell.classList.add("zone-have");
+            
+            const isUnlocked = (i < unlockedUntil);
+            const isDone = (answers[i] && answers[i].trim() !== "");
+            
+            if (!isUnlocked) {
+                cell.classList.add("locked");
+                cell.innerHTML = "🔒";
+            } else {
+                cell.classList.add("unlocked");
+                if (isDone) {
+                    cell.classList.add("done");
+                    cell.innerHTML = "✅";
+                } else {
+                    cell.innerHTML = (i+1).toString();
+                }
+            }
+            
+            if (isUnlocked && i === unlockedUntil-1 && unlockedUntil-1 < 36) {
+                cell.style.boxShadow = "0 0 0 3px #f59e0b";
+                cell.style.transform = "scale(0.98)";
+            } else if (isUnlocked) {
+                cell.style.boxShadow = "";
+                cell.style.transform = "";
+            }
+            
+            cell.addEventListener("click", (function(index) {
+                return function() {
+                    if (index < unlockedUntil) {
+                        if (index === unlockedUntil-1 || (answers[index] && answers[index].trim() !== "")) {
+                            unlockedUntil = index+1;
+                            saveGame();
+                            renderGrid();
+                            showCurrentQuestion();
+                        } else {
+                            questionText.innerHTML = `<strong>${ВОПРОСЫ[index]}</strong>`;
+                            answerInput.value = answers[index] || "";
+                            const original = saveAndNextBtn.onclick;
+                            saveAndNextBtn.onclick = () => {
+                                answers[index] = answerInput.value;
+                                saveGame();
+                                renderGrid();
+                                if (index === unlockedUntil-1) showCurrentQuestion();
+                                else {
+                                    questionText.innerHTML = `<strong>${ВОПРОСЫ[unlockedUntil-1]}</strong>`;
+                                    answerInput.value = answers[unlockedUntil-1] || "";
+                                }
+                                saveAndNextBtn.onclick = original;
+                                saveStatusSpan.innerText = "✓ Сохранено";
+                                setTimeout(() => { if(saveStatusSpan) saveStatusSpan.innerText = ""; }, 1500);
+                            };
+                        }
+                    }
+                };
+            })(i));
+            gridDiv.appendChild(cell);
+        }
+    }
+
+    function showFinalScreen() {
+        questionText.innerHTML = "🎉 ПОЗДРАВЛЯЮ! 🎉<br><br>Ты прошёл(а) все 36 вопросов игры «Формула Сократа».<br><br>📥 Скачай свои ответы и перечитай их через неделю — будет много инсайтов.<br><br>♻️ Можешь начать новую игру кнопкой ниже.<br><br>🧠 Спасибо, что исследуешь себя!";
+        answerInput.style.display = "none";
+        saveAndNextBtn.style.display = "none";
+        // добавим сообщение в панель
+        if (!document.getElementById("finalMessage")) {
+            const finalDiv = document.createElement("div");
+            finalDiv.id = "finalMessage";
+            finalDiv.className = "final-message";
+            finalDiv.innerHTML = "✨ Игра пройдена. Ты можешь скачать ответы или начать заново ✨";
+            questionPanel.insertBefore(finalDiv, questionPanel.firstChild);
+        }
+    }
+
+    function showCurrentQuestion() {
+        if (unlockedUntil === 0) unlockedUntil = 1;
+        const idx = unlockedUntil - 1;
+        
+        // проверка на завершение игры
+        if (idx >= 36 || (idx === 35 && answers[35] && answers[35].trim() !== "")) {
+            // после ответа на 36-й вопрос показываем финал
+            showFinalScreen();
+            return;
+        }
+        
+        // если предыдущий вопрос 35 ответили и перешли к 36 — показываем 36-й вопрос
+        if (idx === 35 && answers[35] && answers[35].trim() !== "") {
+            // уже отвечен, не показываем
+            showFinalScreen();
+            return;
+        }
+        
+        answerInput.style.display = "block";
+        saveAndNextBtn.style.display = "inline-block";
+        const finalMsg = document.getElementById("finalMessage");
+        if (finalMsg) finalMsg.remove();
+        
+        questionText.innerHTML = `<strong>${ВОПРОСЫ[idx]}</strong>`;
+        answerInput.value = answers[idx] || "";
+        answerInput.disabled = false;
+        saveAndNextBtn.disabled = false;
+    }
+
+    function nextStep() {
+        if (unlockedUntil === 0) unlockedUntil = 1;
+        const idx = unlockedUntil - 1;
+        if (idx >= 36) return;
+        
+        answers[idx] = answerInput.value;
+        saveGame();
+        
+        if (idx + 1 >= 36) {
+            renderGrid();
+            showFinalScreen();
+            return;
+        }
+        unlockedUntil = idx + 2;
+        saveGame();
+        renderGrid();
+        showCurrentQuestion();
+    }
+
+    function downloadTxt() {
+        let txt = "🧠 ФОРМУЛА СОКРАТА — МОИ ОТВЕТЫ\n\n";
+        for (let i=0; i<36; i++) {
+            let zone = i<12 ? "[БЫТЬ]" : (i<24 ? "[ДЕЛАТЬ]" : "[ИМЕТЬ]");
+            txt += `${zone} Вопрос ${i+1}: ${ВОПРОСЫ[i]}\n`;
+            txt += `👉 Мой ответ: ${answers[i] || "— не заполнено —"}\n\n`;
+        }
+        const blob = new Blob([txt], {type:"text/plain;charset=utf-8"});
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "sokrat_answers.txt";
+        a.click();
+        URL.revokeObjectURL(a.href);
+    }
+
+    function printGame() {
+        const w = window.open('', '_blank');
+        w.document.write(`<html><head><title>Формула Сократа — мои ответы</title>
+        <style>body{font-family:Arial;padding:30px}.q{margin-bottom:20px}</style></head>
+        <body><h1>🧠 Формула Сократа — мои ответы</h1>`);
+        for (let i=0; i<36; i++) {
+            let zone = i<12 ? "БЫТЬ" : (i<24 ? "ДЕЛАТЬ" : "ИМЕТЬ");
+            w.document.write(`<div class="q"><strong>[${zone}] Вопрос ${i+1}:</strong> ${ВОПРОСЫ[i]}<br>
+            <strong>Ответ:</strong> ${answers[i] || "— не заполнено —"}<br><br></div>`);
+        }
+        w.document.write(`<hr><p>© «Игра отражений», 2026</p></body></html>`);
+        w.document.close();
+        w.print();
+    }
+
+    function resetGame() {
+        if (confirm("❕ Новая игра удалит все твои ответы и сбросит прогресс. Продолжить?")) {
+            localStorage.removeItem("socrat_game");
+            answers = new Array(36).fill("");
+            unlockedUntil = 1;
+            saveGame();
+            renderGrid();
+            answerInput.style.display = "block";
+            saveAndNextBtn.style.display = "inline-block";
+            const finalMsg = document.getElementById("finalMessage");
+            if (finalMsg) finalMsg.remove();
+            showCurrentQuestion();
+        }
+    }
+
+    loadGame();
+    renderGrid();
+    showCurrentQuestion();
+    saveAndNextBtn.onclick = nextStep;
+    downloadBtn.onclick = downloadTxt;
+    resetGameBtn.onclick = resetGame;
+    printBtn.onclick = printGame;
+    answerInput.addEventListener("input", () => {
+        if (unlockedUntil > 0 && unlockedUntil-1 < 36) {
+            answers[unlockedUntil-1] = answerInput.value;
+            saveGame();
+            saveStatusSpan.innerText = "✏️ сохранено";
+            setTimeout(() => { if(saveStatusSpan) saveStatusSpan.innerText = ""; }, 1000);
+        }
+    });
+</script>
+</body>
+</html>
